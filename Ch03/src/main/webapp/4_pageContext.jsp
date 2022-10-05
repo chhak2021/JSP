@@ -22,7 +22,7 @@
 		<h3>pageContext 객체</h3>
 		
 		<h4>include</h4>
-		<%
+		<%			
 			pageContext.include("./inc/_header.jsp");
 			pageContext.include("./inc/_footer.jsp");
 		%>
