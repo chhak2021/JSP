@@ -1,5 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
+	// 전송 데이터 인코딩
+	request.setCharacterEncoding("UTF-8");
+
 	// 전송 데이터 수신
 	String id 	  = request.getParameter("id");
 	String pw 	  = request.getParameter("pw");
@@ -22,9 +25,23 @@
 			비밀번호 : <%= pw %><br/>
 			이름 : <%= name %><br/>
 			생년월일 : <%= birth %><br/>
-			성별 : <%= gender %><br/>
+			성별 : 
+			<%
+				if(gender.equals("1")){
+					out.println("남자");
+				}else{
+					out.println("여자");
+				}
+			%>
+			<br/>
 			주소 : <%= addr %><br/>		
-			취미 : <%= String.join(",", hobbies) %><br/>		
+			취미 : 
+			<%
+				for(String hobby : hobbies){
+					out.println(hobby + " ");
+				}
+			%>
+			<br/>		
 		</p>
 		
 		<a href="../1_request.jsp">뒤로가기</a>
