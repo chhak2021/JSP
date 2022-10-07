@@ -24,8 +24,6 @@
 			out.println("<li>부산</li>");
 			out.println("<li>광주</li>");
 			out.println("</ul>");
-		
 		%>
-		
 	</body>
 </html>
