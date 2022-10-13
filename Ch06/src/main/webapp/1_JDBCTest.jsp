@@ -13,7 +13,8 @@
 	<body>
 		<h3>JDBC 실습</h3>
 		
-		<a href="./user/list.jsp">user CRUD 실습하기</a>
+		<a href="./user/list.jsp">user CRUD 실습하기</a><br/>
+		<a href="./member/list.jsp">member CRUD 실습하기</a><br/>
 		
 		
 	</body>
