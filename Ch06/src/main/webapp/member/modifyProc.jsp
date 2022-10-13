@@ -11,7 +11,6 @@
 	String pos  = request.getParameter("pos");
 	String dep  = request.getParameter("dep");
 		
-	
 	// 데이터베이스 작업
 	try{
 		String host = "jdbc:mysql://127.0.0.1:3306/java2db";
@@ -29,7 +28,7 @@
 		       sql += "`dep`="+dep+" ";
 		       sql += "WHERE `uid`='"+uid+"'";
 		       
-		stmt.executeUpdate(sql);		       	
+		stmt.executeUpdate(sql);
 		conn.close();
 		
 	}catch(Exception e){
