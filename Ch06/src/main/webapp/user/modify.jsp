@@ -53,11 +53,11 @@
 		<a href="../1_JDBCTest.jsp">처음으로</a>
 		<a href="./list.jsp">user 목록</a>
 		
-		<form action="#" method="post">
+		<form action="./modifyProc.jsp" method="post">
 			<table border="1">
 				<tr>
 					<td>아이디</td>
-					<td><input type="text" name="uid" value="<%= ub.getUid() %>"/></td>
+					<td><input type="text" name="uid" readonly value="<%= ub.getUid() %>"/></td>
 				</tr>
 				<tr>
 					<td>이름</td>
