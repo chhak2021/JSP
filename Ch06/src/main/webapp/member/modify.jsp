@@ -87,10 +87,6 @@
 					</td>
 				</tr>
 				<tr>
-					<td>입사일</td>
-					<td><input type="date" name="rdate" value="<%= mb.getRdate() %>"/></td>					
-				</tr>
-				<tr>
 					<td colspan="2" align="right">
 						<input type="submit" value="수정"/>
 					</td>

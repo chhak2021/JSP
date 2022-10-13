@@ -48,10 +48,6 @@
 					</td>
 				</tr>
 				<tr>
-					<td>입사일</td>
-					<td><input type="date" name="rdate"/></td>					
-				</tr>
-				<tr>
 					<td colspan="2" align="right">
 						<input type="submit" value="등록"/>
 					</td>

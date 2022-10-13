@@ -80,10 +80,10 @@
 								out.println("영업3부");
 								break;
 							case 104:
-								out.println("영업4부");
+								out.println("인사부");
 								break;
 							case 105:
-								out.println("인사부");
+								out.println("영업지원부");
 								break;
 							}
 						%>

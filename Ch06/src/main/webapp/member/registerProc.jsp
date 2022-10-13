@@ -10,7 +10,6 @@
 	String hp   = request.getParameter("hp");
 	String pos  = request.getParameter("pos");
 	String dep  = request.getParameter("dep");
-	String rdate  = request.getParameter("rdate");
 	
 	// 데이터베이스 작업
 	String host = "jdbc:mysql://127.0.0.1:3306/java2db";
@@ -20,14 +19,13 @@
 	try{
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection conn = DriverManager.getConnection(host, user, pass);
-		String sql = "INSERT INTO `member` VALUES (?,?,?,?,?,?);";
+		String sql = "INSERT INTO `member` VALUES (?,?,?,?,?,NOW());";
 		PreparedStatement psmt = conn.prepareStatement(sql);
 		psmt.setString(1, uid);
 		psmt.setString(2, name);
 		psmt.setString(3, hp);
 		psmt.setString(4, pos);
 		psmt.setString(5, dep);
-		psmt.setString(6, rdate);
 		
 		psmt.executeUpdate();
 		conn.close();

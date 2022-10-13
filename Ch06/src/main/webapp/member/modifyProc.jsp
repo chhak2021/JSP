@@ -10,8 +10,8 @@
 	String hp   = request.getParameter("hp");
 	String pos  = request.getParameter("pos");
 	String dep  = request.getParameter("dep");
-	String rdate  = request.getParameter("rdate");
 		
+	
 	// 데이터베이스 작업
 	try{
 		String host = "jdbc:mysql://127.0.0.1:3306/java2db";
@@ -26,8 +26,7 @@
 		       sql += "`name`='"+name+"',";
 		       sql += "`hp`='"+hp+"',";
 		       sql += "`pos`='"+pos+"',";
-		       sql += "`dep`="+dep+", ";
-		       sql += "`rdate`="+rdate+" ";
+		       sql += "`dep`="+dep+" ";
 		       sql += "WHERE `uid`='"+uid+"'";
 		       
 		stmt.executeUpdate(sql);		       	
