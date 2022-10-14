@@ -21,6 +21,4 @@ public class DB {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		return DriverManager.getConnection(HOST, USER, PASS);
 	}
-	
-
 }
