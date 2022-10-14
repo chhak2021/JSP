@@ -1,3 +1,4 @@
+<%@page import="config.DBCP"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="javax.sql.DataSource"%>
@@ -9,9 +10,11 @@
 	request.setCharacterEncoding("utf-8");
 	String uid = request.getParameter("uid");
 	String name = request.getParameter("name");
+	String birth = request.getParameter("birth");
 	String gender = request.getParameter("gender");
 	String age = request.getParameter("age");
 	String addr = request.getParameter("addr");
+	String hp    = request.getParameter("hp");
 	
 	// 데이터베이스 작업
 	try{
@@ -24,13 +27,15 @@
 		Connection conn = ds.getConnection(); // 커넥션 풀에서 커넥션 얻기
 		
 		// 3단계
-		String sql = "INSERT INTO `user5` VALUES (?,?,?,?,?)";
+		String sql = "INSERT INTO `user5` VALUES (?,?,?,?,?,?,?)";
 		PreparedStatement psmt = conn.prepareStatement(sql);
 		psmt.setString(1, uid);
 		psmt.setString(2, name);
-		psmt.setString(3, gender);
-		psmt.setString(4, age);
-		psmt.setString(5, addr);
+		psmt.setString(3, birth);
+		psmt.setString(4, gender);
+		psmt.setString(5, age);
+		psmt.setString(6, addr);
+		psmt.setString(7, hp);
 		
 		// 4단계
 		psmt.executeUpdate();
