@@ -64,13 +64,13 @@
 				<td><%= ub.getUid() %></td>
 				<td><%= ub.getName() %></td>
 				<td><%= ub.getBirth() %></td>
-				<td><%= ub.getGender() == 1? "남":"여" %></td>
+				<td><%= ub.getGender() == 1 ? "남":"여" %></td>
 				<td><%= ub.getAge() %></td>
 				<td><%= ub.getAddr() %></td>
 				<td><%= ub.getHp() %></td>
 				<td>
-					<a href="#">수정</a>
-					<a href="#">삭제</a>
+					<a href="./modify.jsp?uid=<%= ub.getUid() %>">수정</a>
+					<a href="./delete.jsp?uid=<%= ub.getUid() %>">삭제</a>
 				</td>
 			</tr>
 			<% } %>
