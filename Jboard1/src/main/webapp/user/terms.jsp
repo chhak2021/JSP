@@ -4,14 +4,33 @@
 <%@page import="db.DBCP"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./_header.jsp" %>
+<script>
+	$(function(){
+		
+		$('.btnNext').click(function(){
+			
+			let isCheck1 = $('input[class=terms]').is(':checked');
+			let isCheck2 = $('input[class=privacy]').is(':checked');
+			
+			if(isCheck1 && isCheck2){
+				return true;
+			}else{
+				alert('동의 체크를 하셔야 합니다.');
+				return false;				
+			}			
+		});
+	});
+</script>
+
 <%
-	String terms = null;	
-	String privacy = null;	
+	String terms = null;
+	String privacy = null;
 
 	try{
 		Connection conn = DBCP.getConnection();
 		Statement stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery("select * from `board_terms`");
+		
 		if(rs.next()){
 			terms = rs.getString(1);
 			privacy = rs.getString(2);
@@ -22,8 +41,7 @@
 		
 	}catch(Exception e){
 		e.printStackTrace();
-	}
-	
+	}	
 %>
 <main id="user">
     <section class="terms">
