@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>글목록</title>
+    <title>게시판 제목</title>
     <link rel="stylesheet" href="/Jboard1/css/style.css"/>    
 </head>
 <body>

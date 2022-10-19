@@ -1,12 +1,37 @@
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="db.DBCP"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./_header.jsp" %>
+<%
+	String terms = null;	
+	String privacy = null;	
+
+	try{
+		Connection conn = DBCP.getConnection();
+		Statement stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery("select * from `board_terms`");
+		if(rs.next()){
+			terms = rs.getString(1);
+			privacy = rs.getString(2);
+		}
+		rs.close();
+		stmt.close();
+		conn.close();		
+		
+	}catch(Exception e){
+		e.printStackTrace();
+	}
+	
+%>
 <main id="user">
     <section class="terms">
         <table border="1">
             <caption>사이트 이용약관</caption>
             <tr>
                 <td>
-                    <textarea name="terms">약관내용</textarea>
+                    <textarea name="terms"><%= terms %></textarea>
                     <label><input type="checkbox" class="terms">&nbsp;동의합니다.</label>
                 </td>
             </tr>
@@ -15,7 +40,7 @@
             <caption>개인정보 취급방침</caption>
             <tr>
                 <td>
-                    <textarea name="privacy">약관내용</textarea>
+                    <textarea name="privacy"><%= privacy %></textarea>
                     <label><input type="checkbox" class="privacy">&nbsp;동의합니다.</label>
                 </td>
             </tr>
