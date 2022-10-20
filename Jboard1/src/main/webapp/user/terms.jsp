@@ -21,7 +21,6 @@
 		});
 	});
 </script>
-
 <%
 	String terms = null;
 	String privacy = null;
