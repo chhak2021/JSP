@@ -1,5 +1,129 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./_header.jsp" %>
+
+<script>
+	// 데이터 검증에 사용하는 정규표현식
+	let reUid   = /^[a-z]+[a-z0-9]{5,19}$/g;
+	let rePass  = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{5,16}$/;
+	let reName  = /^[가-힣]+$/ 
+	let reNick  = /^[a-zA-Zㄱ-힣0-9][a-zA-Zㄱ-힣0-9]*$/;
+	let reEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+	let reHp    = /^01(?:0|1|[6-9])-(?:\d{4})-\d{4}$/;
+	
+	// 폼 데이터 검증 결과 상태변수
+	let isUidOk = false;
+	let isPassOk = false;
+	let isNameOk = false;
+	let isNickOk = false;
+	let isEmailOk = false;
+	let isHpOk = false;
+	
+	$(function(){
+		
+		// 아이디 검사하기
+		$('input[name=uid]').focusout(function(){
+			
+			let value = $(this).val();
+			
+			if(reUid.test(value)){
+				isUidOk = true;
+				$('.uidResult').css('color', 'green').text('사용하실 수 있는 아이디 입니다.');
+			}else{
+				isUidOk = false;
+				$('.uidResult').css('color', 'red').text('유효한 아이디가 아닙니다.');
+			}		
+		});		
+		
+		// 비밀번호 검사하기
+		$('input[name=pass2]').focusout(function(){
+			
+			let pass1 = $('input[name=pass1]').val();
+			let pass2 = $('input[name=pass2]').val();
+			
+			if(rePass.test(pass2)){
+				
+				if(pass1 == pass2){
+					isPassOk = true;
+					$('.passResult').css('color', 'green').text('사용하실 수 있는 비밀번호 입니다.');
+				}else{
+					isPassOk = false;
+					$('.passResult').css('color', 'red').text('비밀번호가 일치하지 않습니다.');	
+				}
+				
+			}else{
+				isPassOk = false;
+				$('.passResult').css('color', 'red').text('숫자,영문,특수문자 포함 5자리 이상 이어야 합니다.');
+			}			
+			
+		});
+		
+		// 이름 검사하기
+		$('input[name=name]').focusout(function(){
+			
+			let name = $(this).val();
+			
+			if(reName.test(name)){
+				isNameOk = true;
+				$('.nameResult').text('');
+			}else{
+				isNameOk = false;
+				$('.nameResult').css('color', 'red').text('유효한 이름이 아닙니다.');
+			}			
+		});
+		
+		// 별명 검사하기
+		// 이메일 검사하기
+		// 휴대폰 검사하기
+	
+		
+		
+		// 최종 폼 전송할 때
+		$('.register > form').submit(function(){
+			
+			// 아이디 검증
+			if(!isUidOk){
+				alert('아이디가 유효하지 않습니다.');
+				return false;
+			}
+			
+			// 비밀번호 검증
+			if(!isPassOk){
+				alert('비밀번호가 유효하지 않습니다.');
+				return false;
+			}
+			
+			// 이름 검증
+			if(!isNameOk){
+				alert('이름이 유효하지 않습니다.');
+				return false;
+			}
+			
+			// 별명 검증
+			if(!isNickOk){
+				alert('별명이 유효하지 않습니다.');
+				return false;
+			}
+			
+			// 이메일 검증
+			if(!isEmailOk){
+				alert('이메일이 유효하지 않습니다.');
+				return false;
+			}
+			
+			// 휴대폰 검증
+			if(!isHpOk){
+				alert('휴대폰이 유효하지 않습니다.');
+				return false;
+			}
+			
+			return true;
+		});	
+	});
+
+</script>
+
+
+
 <main id="user">
     <section class="register">
 
@@ -20,7 +144,10 @@
                 </tr>
                 <tr>
                     <td>비밀번호 확인</td>
-                    <td><input type="password" name="pass2" placeholder="비밀번호 입력 확인"/></td>
+                    <td>
+                    	<input type="password" name="pass2" placeholder="비밀번호 입력 확인"/>
+                    	<span class="passResult"></span>
+                    </td>
                 </tr>
             </table>
 
@@ -29,7 +156,8 @@
                 <tr>
                     <td>이름</td>
                     <td>
-                        <input type="text" name="name" placeholder="이름 입력"/>                        
+                        <input type="text" name="name" placeholder="이름 입력"/>
+                        <span class="nameResult"></span>
                     </td>
                 </tr>
                 <tr>

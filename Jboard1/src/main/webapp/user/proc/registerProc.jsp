@@ -19,7 +19,7 @@
 		
 		String sql = "insert into `board_user` set ";
 			   sql += "`uid`=?,";
-			   sql += "`pass`=?,";
+			   sql += "`pass`=SHA2(?, 256),";
 			   sql += "`name`=?,";
 			   sql += "`nick`=?,";
 			   sql += "`email`=?,";
