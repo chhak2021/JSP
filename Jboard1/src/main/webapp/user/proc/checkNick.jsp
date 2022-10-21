@@ -7,15 +7,15 @@
 <%
 	// 전송 데이터 수신
 	request.setCharacterEncoding("utf-8");
-	String uid = request.getParameter("uid");
+	String nick = request.getParameter("nick");
 
 	// 데이터베이스 처리
 	int result = 0;
 	
 	try{
 		Connection conn = DBCP.getConnection();
-		PreparedStatement psmt = conn.prepareStatement("select count(`uid`) from `board_user` where `uid`=?");
-		psmt.setString(1, uid);
+		PreparedStatement psmt = conn.prepareStatement("select count(`nick`) from `board_user` where `nick`=?");
+		psmt.setString(1, nick);
 		
 		ResultSet rs = psmt.executeQuery();
 		

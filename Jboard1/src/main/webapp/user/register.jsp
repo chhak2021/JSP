@@ -1,232 +1,56 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./_header.jsp" %>
-
+<script src="/Jboard1/js/validation.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-	// 데이터 검증에 사용하는 정규표현식
-	let reUid   = /^[a-z]+[a-z0-9]{5,19}$/g;
-	let rePass  = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{5,16}$/;
-	let reName  = /^[가-힣]+$/ 
-	let reNick  = /^[a-zA-Zㄱ-힣0-9][a-zA-Zㄱ-힣0-9]*$/;
-	let reEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-	let reHp    = /^01(?:0|1|[6-9])-(?:\d{4})-\d{4}$/;
-	
-	// 폼 데이터 검증 결과 상태변수
-	let isUidOk   = false;
-	let isPassOk  = false;
-	let isNameOk  = false;
-	let isNickOk  = false;
-	let isEmailOk = false;
-	let isHpOk 	  = false;
-	
-	$(function(){
-		
-		// 아이디 검사하기
-		$('input[name=uid]').keydown(function(){
-			isUidOk = false;
-		});
-		
-		$('#btnIdCheck').click(function(){			
-						
-			let uid = $('input[name=uid]').val();
-			
-			if(isUidOk){
-				return;
-			}
-			
-			if(!uid.match(reUid)) {
-				$('.uidResult').css('color', 'red').text('유효한 아이디가 아닙니다.');
-				isUidOk = false;
-				return;
-			}
-			
-			console.log('4');
-			
-			let jsonData = {
-				"uid": uid
-			};
-			
-			$('.uidResult').css('color', 'black').text('...');
-			
-			setTimeout(function(){
-				
-				$.ajax({
-					url: './proc/checkUid.jsp',
-					method: 'get',
-					data: jsonData,
-					dataType: 'json',
-					success: function(data){
-						if(data.result == 0){
-							$('.uidResult').css('color', 'green').text('사용 가능한 아이디 입니다.');
-							isUidOk = true;
-						}else{
-							$('.uidResult').css('color', 'red').text('이미 사용중인 아이디 입니다.');
-							isUidOk = false;
-						}					
-					}				
-				});
-				
-			}, 500);
-		});
-		
-		// 비밀번호 검사하기
-		$('input[name=pass2]').focusout(function(){
-			
-			let pass1 = $('input[name=pass1]').val();
-			let pass2 = $('input[name=pass2]').val();
-			
-			if(pass2.match(rePass)){
-				
-				if(pass1 == pass2){
-					isPassOk = true;
-					$('.passResult').css('color', 'green').text('사용하실 수 있는 비밀번호 입니다.');
-				}else{
-					isPassOk = false;
-					$('.passResult').css('color', 'red').text('비밀번호가 일치하지 않습니다.');	
-				}
-				
-			}else{
-				isPassOk = false;
-				$('.passResult').css('color', 'red').text('숫자,영문,특수문자 포함 5자리 이상 이어야 합니다.');
-			}			
-			
-		});
-		
-		// 이름 검사하기
-		$('input[name=name]').focusout(function(){
-			
-			let name = $(this).val();
-			
-			if(name.match(reName)){
-				isNameOk = true;
-				$('.nameResult').text('');
-			}else{
-				isNameOk = false;
-				$('.nameResult').css('color', 'red').text('유효한 이름이 아닙니다.');
-			}			
-		});
-		
-		// 별명 검사하기
-		$('input[name=nick]').keydown(function(){
-			isNickOk = false;
-		});
-		
-		$('#btnNickCheck').click(function(){			
-						
-			let nick = $('input[name=nick]').val();
-			
-			if(isNickOk){
-				return;
-			}
-			
-			if(!nick.match(reNick)) {
-				$('.nickResult').css('color', 'red').text('유효한 별명이 아닙니다.');
-				isNickOk = false;
-				return;
-			}
-			
-			
-			let jsonData = {
-				"nick": nick
-			};
-			
-			$('.nickResult').css('color', 'black').text('...');
-			
-			setTimeout(function(){
-				
-				$.ajax({
-					url: './proc/checkNick.jsp',
-					method: 'get',
-					data: jsonData,
-					dataType: 'json',
-					success: function(data){
-						if(data.result == 0){
-							$('.nickResult').css('color', 'green').text('사용 가능한 별명 입니다.');
-							isNickOk = true;
-						}else{
-							$('.nickResult').css('color', 'red').text('이미 사용중인 별명 입니다.');
-							isNickOk = false;
-						}					
-					}				
-				});
-				
-			}, 500);
-		});
-		
-		
-		// 이메일 검사하기
-		$('input[name=email]').focusout(function(){
-			
-			let email = $(this).val();
-			
-			if(email.match(reEmail)){
-				isEmailOk = true;
-				$('.emailResult').text('');
-			}else{
-				isEmailOk = false;
-				$('.emailResult').css('color', 'red').text('유효하지 않는 이메일 입니다.');
-			}			
-		});
-		
-		// 휴대폰 검사하기
-		$('input[name=hp]').focusout(function(){
-			
-			let hp = $(this).val();
-			
-			if(hp.match(reHp)){
-				isHpOk = true;
-				$('.hpResult').text('');
-			}else{
-				isHpOk = false;
-				$('.hpResult').css('color', 'red').text('유효하지 않는 휴대폰 입니다.');
-			}			
-		});
-		
-		
-		// 최종 폼 전송할 때
-		$('.register > form').submit(function(){
-			
-			// 아이디 검증
-			if(!isUidOk){
-				alert('아이디를 확인 하십시요.');
-				return false;
-			}
-			
-			// 비밀번호 검증
-			if(!isPassOk){
-				alert('비밀번호가 유효하지 않습니다.');
-				return false;
-			}
-			
-			// 이름 검증
-			if(!isNameOk){
-				alert('이름이 유효하지 않습니다.');
-				return false;
-			}
-			
-			// 별명 검증
-			if(!isNickOk){
-				alert('별명이 유효하지 않습니다.');
-				return false;
-			}
-			
-			// 이메일 검증
-			if(!isEmailOk){
-				alert('이메일이 유효하지 않습니다.');
-				return false;
-			}
-			
-			// 휴대폰 검증
-			if(!isHpOk){
-				alert('휴대폰이 유효하지 않습니다.');
-				return false;
-			}
-			
-			return true;
-		});	
-	});
+    function zipcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                    //document.getElementById("sample6_extraAddress").value = extraAddr;
+                
+                } else {
+                    //document.getElementById("sample6_extraAddress").value = '';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('zip').value = data.zonecode;
+                document.getElementById("addr1").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("addr2").focus();
+            }
+        }).open();
+    }
 </script>
-
 
 
 <main id="user">
@@ -291,10 +115,10 @@
                 <tr>
                     <td>주소</td>
                     <td>
-                        <input type="text" name="zip" placeholder="우편번호"/>
-                        <button type="button"><img src="/Jboard1/img/chk_post.gif" alt="우편번호찾기"/></button>
-                        <input type="text" name="addr1" placeholder="주소 검색"/>
-                        <input type="text" name="addr2" placeholder="상세주소 입력"/>
+                        <input type="text" name="zip" id="zip" placeholder="우편번호" readonly="readonly"/>
+                        <button type="button" onclick="zipcode()"><img src="/Jboard1/img/chk_post.gif" alt="우편번호찾기"/></button>
+                        <input type="text" name="addr1" id="addr1" placeholder="주소 검색"/>
+                        <input type="text" name="addr2" id="addr2" placeholder="상세주소 입력"/>
                     </td>
                 </tr>
             </table>
