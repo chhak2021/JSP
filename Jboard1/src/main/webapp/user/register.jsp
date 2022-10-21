@@ -21,35 +21,51 @@
 	$(function(){
 		
 		// 아이디 검사하기
-		$('#btnIdCheck').click(function(){
-			
+		$('input[name=uid]').keydown(function(){
+			isUidOk = false;
+		});
+		
+		$('#btnIdCheck').click(function(){			
+						
 			let uid = $('input[name=uid]').val();
 			
-			if(!reUid.test(uid)){				
+			if(isUidOk){
+				return;
+			}
+			
+			if(!uid.match(reUid)) {
 				$('.uidResult').css('color', 'red').text('유효한 아이디가 아닙니다.');
 				isUidOk = false;
 				return;
 			}
 			
+			console.log('4');
+			
 			let jsonData = {
 				"uid": uid
 			};
 			
-			$.ajax({
-				url: './proc/checkUid.jsp',
-				method: 'get',
-				data: jsonData,
-				dataType: 'json',
-				success: function(data){
-					if(data.result == 0){
-						$('.uidResult').css('color', 'green').text('사용 가능한 아이디 입니다.');
-						isUidOk = true;
-					}else{
-						$('.uidResult').css('color', 'red').text('이미 사용중인 아이디 입니다.');
-						isUidOk = false;
-					}					
-				}				
-			});
+			$('.uidResult').css('color', 'black').text('...');
+			
+			setTimeout(function(){
+				
+				$.ajax({
+					url: './proc/checkUid.jsp',
+					method: 'get',
+					data: jsonData,
+					dataType: 'json',
+					success: function(data){
+						if(data.result == 0){
+							$('.uidResult').css('color', 'green').text('사용 가능한 아이디 입니다.');
+							isUidOk = true;
+						}else{
+							$('.uidResult').css('color', 'red').text('이미 사용중인 아이디 입니다.');
+							isUidOk = false;
+						}					
+					}				
+				});
+				
+			}, 500);
 		});
 		
 		// 비밀번호 검사하기
@@ -58,7 +74,7 @@
 			let pass1 = $('input[name=pass1]').val();
 			let pass2 = $('input[name=pass2]').val();
 			
-			if(rePass.test(pass2)){
+			if(pass2.match(rePass)){
 				
 				if(pass1 == pass2){
 					isPassOk = true;
@@ -80,7 +96,7 @@
 			
 			let name = $(this).val();
 			
-			if(reName.test(name)){
+			if(name.match(reName)){
 				isNameOk = true;
 				$('.nameResult').text('');
 			}else{
@@ -90,25 +106,59 @@
 		});
 		
 		// 별명 검사하기
-		$('input[name=nick]').focusout(function(){
-			
-			let nick = $(this).val();
-			
-			if(reNick.test(nick)){
-				isNickOk = true;
-				$('.nickResult').text('');
-			}else{
-				isNickOk = false;
-				$('.nickResult').css('color', 'red').text('유효하지 않는 별명입니다.');
-			}			
+		$('input[name=nick]').keydown(function(){
+			isNickOk = false;
 		});
+		
+		$('#btnNickCheck').click(function(){			
+						
+			let nick = $('input[name=nick]').val();
+			
+			if(isNickOk){
+				return;
+			}
+			
+			if(!nick.match(reNick)) {
+				$('.nickResult').css('color', 'red').text('유효한 별명이 아닙니다.');
+				isNickOk = false;
+				return;
+			}
+			
+			
+			let jsonData = {
+				"nick": nick
+			};
+			
+			$('.nickResult').css('color', 'black').text('...');
+			
+			setTimeout(function(){
+				
+				$.ajax({
+					url: './proc/checkNick.jsp',
+					method: 'get',
+					data: jsonData,
+					dataType: 'json',
+					success: function(data){
+						if(data.result == 0){
+							$('.nickResult').css('color', 'green').text('사용 가능한 별명 입니다.');
+							isNickOk = true;
+						}else{
+							$('.nickResult').css('color', 'red').text('이미 사용중인 별명 입니다.');
+							isNickOk = false;
+						}					
+					}				
+				});
+				
+			}, 500);
+		});
+		
 		
 		// 이메일 검사하기
 		$('input[name=email]').focusout(function(){
 			
 			let email = $(this).val();
 			
-			if(reEmail.test(email)){
+			if(email.match(reEmail)){
 				isEmailOk = true;
 				$('.emailResult').text('');
 			}else{
@@ -122,7 +172,7 @@
 			
 			let hp = $(this).val();
 			
-			if(reHp.test(hp)){
+			if(hp.match(reHp)){
 				isHpOk = true;
 				$('.hpResult').text('');
 			}else{
@@ -137,7 +187,7 @@
 			
 			// 아이디 검증
 			if(!isUidOk){
-				alert('아이디가 유효하지 않습니다.');
+				alert('아이디를 확인 하십시요.');
 				return false;
 			}
 			
@@ -220,7 +270,7 @@
                     <td>
                         <p class="nickInfo">공백없는 한글, 영문, 숫자 입력</p>
                         <input type="text" name="nick" placeholder="별명 입력"/>
-                        <button type="button"><img src="/Jboard1/img/chk_id.gif" alt="중복확인"/></button>
+                        <button type="button" id="btnNickCheck"><img src="/Jboard1/img/chk_id.gif" alt="중복확인"/></button>
                         <span class="nickResult"></span>
                     </td>
                 </tr>
