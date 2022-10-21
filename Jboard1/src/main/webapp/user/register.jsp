@@ -11,28 +11,46 @@
 	let reHp    = /^01(?:0|1|[6-9])-(?:\d{4})-\d{4}$/;
 	
 	// 폼 데이터 검증 결과 상태변수
-	let isUidOk = false;
-	let isPassOk = false;
-	let isNameOk = false;
-	let isNickOk = false;
+	let isUidOk   = false;
+	let isPassOk  = false;
+	let isNameOk  = false;
+	let isNickOk  = false;
 	let isEmailOk = false;
-	let isHpOk = false;
+	let isHpOk 	  = false;
 	
 	$(function(){
 		
 		// 아이디 검사하기
-		$('input[name=uid]').focusout(function(){
+		$('#btnIdCheck').click(function(){
 			
-			let value = $(this).val();
+			let uid = $('input[name=uid]').val();
 			
-			if(reUid.test(value)){
-				isUidOk = true;
-				$('.uidResult').css('color', 'green').text('사용하실 수 있는 아이디 입니다.');
-			}else{
-				isUidOk = false;
+			if(!reUid.test(uid)){				
 				$('.uidResult').css('color', 'red').text('유효한 아이디가 아닙니다.');
-			}		
-		});		
+				isUidOk = false;
+				return;
+			}
+			
+			let jsonData = {
+				"uid": uid
+			};
+			
+			$.ajax({
+				url: './proc/checkUid.jsp',
+				method: 'get',
+				data: jsonData,
+				dataType: 'json',
+				success: function(data){
+					if(data.result == 0){
+						$('.uidResult').css('color', 'green').text('사용 가능한 아이디 입니다.');
+						isUidOk = true;
+					}else{
+						$('.uidResult').css('color', 'red').text('이미 사용중인 아이디 입니다.');
+						isUidOk = false;
+					}					
+				}				
+			});
+		});
 		
 		// 비밀번호 검사하기
 		$('input[name=pass2]').focusout(function(){
@@ -72,9 +90,46 @@
 		});
 		
 		// 별명 검사하기
+		$('input[name=nick]').focusout(function(){
+			
+			let nick = $(this).val();
+			
+			if(reNick.test(nick)){
+				isNickOk = true;
+				$('.nickResult').text('');
+			}else{
+				isNickOk = false;
+				$('.nickResult').css('color', 'red').text('유효하지 않는 별명입니다.');
+			}			
+		});
+		
 		// 이메일 검사하기
+		$('input[name=email]').focusout(function(){
+			
+			let email = $(this).val();
+			
+			if(reEmail.test(email)){
+				isEmailOk = true;
+				$('.emailResult').text('');
+			}else{
+				isEmailOk = false;
+				$('.emailResult').css('color', 'red').text('유효하지 않는 이메일 입니다.');
+			}			
+		});
+		
 		// 휴대폰 검사하기
-	
+		$('input[name=hp]').focusout(function(){
+			
+			let hp = $(this).val();
+			
+			if(reHp.test(hp)){
+				isHpOk = true;
+				$('.hpResult').text('');
+			}else{
+				isHpOk = false;
+				$('.hpResult').css('color', 'red').text('유효하지 않는 휴대폰 입니다.');
+			}			
+		});
 		
 		
 		// 최종 폼 전송할 때
@@ -134,7 +189,7 @@
                     <td>아이디</td>
                     <td>
                         <input type="text" name="uid" placeholder="아이디 입력"/>
-                        <button type="button"><img src="/Jboard1/img/chk_id.gif" alt="중복확인"/></button>
+                        <button type="button" id="btnIdCheck"><img src="/Jboard1/img/chk_id.gif" alt="중복확인"/></button>
                         <span class="uidResult"></span>
                     </td>
                 </tr>
@@ -171,11 +226,17 @@
                 </tr>
                 <tr>
                     <td>이메일</td>
-                    <td><input type="email" name="email" placeholder="이메일 입력"/></td>
+                    <td>
+                    	<input type="email" name="email" placeholder="이메일 입력"/>
+                    	<span class="emailResult"></span>
+                    </td>
                 </tr>
                 <tr>
                     <td>휴대폰</td>
-                    <td><input type="text" name="hp" placeholder="휴대폰 입력"/></td>
+                    <td>
+                    	<input type="text" name="hp" placeholder="휴대폰 입력"/>
+                    	<span class="hpResult"></span>
+                    </td>
                 </tr>
                 <tr>
                     <td>주소</td>
