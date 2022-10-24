@@ -47,7 +47,11 @@
 
 	if(ub != null){
 		// 회원이 맞을 경우
+		
+		// 세션처리
 		session.setAttribute("sessUser", ub);
+		
+		// 리다이렉트
 		response.sendRedirect("/Jboard1/list.jsp");
 	}else{
 		// 회원이 아닐 경우
