@@ -1,8 +1,20 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+	request.setCharacterEncoding("utf-8");
+	String success = request.getParameter("success");
+%>
 <jsp:include page="./_header.jsp"/>
+<script>
+	let success = "<%= success %>";
+	
+	if(success == "100"){
+		alert('일치하는 회원이 없습니다.\n아이디, 비밀번호를 다시 확인 하십시요.');
+	}
+</script>
+
 <main id="user">
     <section class="login">
-        <form action="/Jboard1/list.jsp">
+        <form action="/Jboard1/user/proc/loginProc.jsp" method="post">
             <table border="0">
                 <tr>
                     <td><img src="/Jboard1/img/login_ico_id.png" alt="아이디"/></td>
