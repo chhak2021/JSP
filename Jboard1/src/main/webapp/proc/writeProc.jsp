@@ -1,3 +1,5 @@
+<%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
+<%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="kr.co.jboard1.db.Sql"%>
 <%@page import="java.sql.Connection"%>
@@ -5,10 +7,19 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	request.setCharacterEncoding("utf-8");
-	String title   = request.getParameter("title");
-	String content = request.getParameter("content");
-	String uid     = request.getParameter("uid");
+
+	// multipart 폼 데이터 수신
+	String savePath = application.getRealPath("/file");
+	int maxSize = 1024 * 1024 * 10;
+	MultipartRequest mr = new MultipartRequest(request, savePath, maxSize, "UTF-8", new DefaultFileRenamePolicy());
+
+	String title   = mr.getParameter("title");
+	String content = mr.getParameter("content");
+	String uid     = mr.getParameter("uid");
+	String fname   = mr.getFilesystemName("fname");
 	String regip   = request.getRemoteAddr();
+	
+	System.out.println("fname : "+fname);
 	
 	try{
 		Connection conn = DBCP.getConnection();
@@ -24,6 +35,17 @@
 		conn.close();
 	}catch(Exception e){
 		e.printStackTrace();
+	}
+	
+	// 파일을 첨부했으면
+	if(fname != null){
+		
+		// 파일명 수정
+		int i = fname.lastIndexOf(".");
+		String ext = fname.substring(i);
+		
+		
+		
 	}
 	
 	response.sendRedirect("/Jboard1/list.jsp");
