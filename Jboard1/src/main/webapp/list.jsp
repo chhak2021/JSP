@@ -1,3 +1,4 @@
+<%@page import="kr.co.jboard1.dao.ArticleDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="kr.co.jboard1.bean.ArticleBean"%>
@@ -8,38 +9,22 @@
 <%@page import="kr.co.jboard1.db.DBCP"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-	List<ArticleBean> articles = new ArrayList<>();
-
-	try{
-		Connection conn = DBCP.getConnection();
-		PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_ARTICLES);
-		
-		ResultSet rs = psmt.executeQuery();
-		
-		while(rs.next()){
-			ArticleBean article = new ArticleBean();
-			article.setNo(rs.getInt(1));
-			article.setParent(rs.getInt(2));
-			article.setComment(rs.getInt(3));
-			article.setCate(rs.getString(4));
-			article.setTitle(rs.getString(5));
-			article.setContent(rs.getString(6));
-			article.setFile(rs.getInt(7));
-			article.setHit(rs.getInt(8));
-			article.setUid(rs.getString(9));
-			article.setRegip(rs.getString(10));
-			article.setRdate(rs.getString(11));
-			
-			articles.add(article);			
-		}
-		
-		rs.close();
-		psmt.close();
-		conn.close();
-		
-	}catch(Exception e){
-		e.printStackTrace();
-	}
+	int limitStart = 0;
+	int total = 0;
+	int lastPageNum = 0;
+	
+ 	ArticleDAO dao = ArticleDAO.getInstance();
+ 	
+ 	total = dao.selectCountTotal();
+ 	
+ 	if(total % 10 == 0){
+ 		lastPageNum = (total / 10);
+ 	}else{
+ 		lastPageNum = (total / 10) + 1; 		
+ 	}
+ 	
+ 	List<ArticleBean> articles = dao.selectArticles(limitStart);
+	
 %>
 <%@ include file="./_header.jsp" %>
 <main id="board">
@@ -57,8 +42,8 @@
             <tr>
                 <td><%= article.getNo() %></td>
                 <td><a href="/Jboard1/view.jsp"><%= article.getTitle() %>[<%= article.getComment() %>]</a></td>
-                <td><%= article.getUid() %></td>
-                <td><%= article.getRdate() %></td>
+                <td><%= article.getNick() %></td>
+                <td><%= article.getRdate().substring(2, 10) %></td>
                 <td><%= article.getHit() %></td>
             </tr>
             <% } %>
@@ -66,9 +51,9 @@
 
         <div class="page">
             <a href="#" class="prev">이전</a>
-            <a href="#" class="num current">1</a>
-            <a href="#" class="num">2</a>
-            <a href="#" class="num">3</a>
+            <% for(int i=1 ; i<=lastPageNum ; i++){ %>
+            <a href="#" class="num"><%= i %></a>
+            <% } %>
             <a href="#" class="next">다음</a>
         </div>
 
