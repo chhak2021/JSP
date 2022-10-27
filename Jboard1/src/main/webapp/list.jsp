@@ -9,20 +9,52 @@
 <%@page import="kr.co.jboard1.db.DBCP"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
+	request.setCharacterEncoding("UTF-8");
+	String pg = request.getParameter("pg");
+
+	// 게시물 목록 처리 관련 변수 선언
 	int limitStart = 0;
+	int currentPage = 1;
 	int total = 0;
 	int lastPageNum = 0;
+	int pageGroupCurrent = 1;
+	int pageGroupStart = 1;
+	int pageGroupEnd = 0;
+	int pageStartNum = 0;
 	
+	// 게시물 DAO 객체 가져오기
  	ArticleDAO dao = ArticleDAO.getInstance();
  	
+ 	// 전체 게시물 갯수 구하기
  	total = dao.selectCountTotal();
  	
+ 	// 페이지 마지막 번호 계산
  	if(total % 10 == 0){
  		lastPageNum = (total / 10);
  	}else{
  		lastPageNum = (total / 10) + 1; 		
  	}
  	
+ 	// 현재 페이지 게시물 limit 시작값 계산
+ 	if(pg != null){
+ 		currentPage = Integer.parseInt(pg);
+ 	}
+ 	
+	limitStart = (currentPage - 1) * 10;
+ 	
+	// 페이지 그룹 계산
+	pageGroupCurrent = (int)Math.ceil(currentPage / 10.0);
+	pageGroupStart = (pageGroupCurrent - 1) * 10 + 1;
+	pageGroupEnd = pageGroupCurrent * 10;
+	
+	if(pageGroupEnd > lastPageNum){
+		pageGroupEnd = lastPageNum;
+	}
+	
+	// 페이지 시작 번호 계산
+	pageStartNum = total - limitStart;
+	
+ 	// 현재 페이지 게시물 가져오기
  	List<ArticleBean> articles = dao.selectArticles(limitStart);
 	
 %>
@@ -40,7 +72,7 @@
             </tr>
             <% for(ArticleBean article : articles){ %>
             <tr>
-                <td><%= article.getNo() %></td>
+                <td><%= pageStartNum-- %></td>
                 <td><a href="/Jboard1/view.jsp"><%= article.getTitle() %>[<%= article.getComment() %>]</a></td>
                 <td><%= article.getNick() %></td>
                 <td><%= article.getRdate().substring(2, 10) %></td>
@@ -50,11 +82,15 @@
         </table>
 
         <div class="page">
-            <a href="#" class="prev">이전</a>
-            <% for(int i=1 ; i<=lastPageNum ; i++){ %>
-            <a href="#" class="num"><%= i %></a>
+        	<% if(pageGroupStart > 1){ %>
+            <a href="/Jboard1/list.jsp?pg=<%= pageGroupStart - 1 %>" class="prev">이전</a>
             <% } %>
-            <a href="#" class="next">다음</a>
+            <% for(int i=pageGroupStart ; i<=pageGroupEnd ; i++){ %>
+            <a href="/Jboard1/list.jsp?pg=<%= i %>" class="num <%= (currentPage == i)?"current":"off" %>"><%= i %></a>
+            <% } %>
+            <% if(pageGroupEnd < lastPageNum){ %>
+            <a href="/Jboard1/list.jsp?pg=<%= pageGroupEnd + 1 %>" class="next">다음</a>
+            <% } %>
         </div>
 
         <a href="/Jboard1/write.jsp" class="btn btnWrite">글쓰기</a>
