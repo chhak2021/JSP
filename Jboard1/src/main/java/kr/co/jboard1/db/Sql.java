@@ -37,7 +37,7 @@ public class Sql {
 	
 	public static final String SELECT_MAX_NO = "SELECT MAX(`no`) FROM `board_article`";
 
-	
+	public static final String SELECT_ARTICLES = "select * from `board_article`";
 	
 	
 }
