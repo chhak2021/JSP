@@ -44,5 +44,7 @@ public class Sql {
 												+ "ORDER BY `no` DESC "
 												+ "LIMIT ?, 10";
 	
+	public static final String SELECT_ARTICLE = "select * from `board_article` where `no`=?";
+	
 	
 }
