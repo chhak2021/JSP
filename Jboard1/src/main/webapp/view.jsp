@@ -9,6 +9,7 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	String no = request.getParameter("no");
+	String pg = request.getParameter("pg");
 	
 	ArticleDAO dao = ArticleDAO.getInstance();
 	
@@ -44,7 +45,7 @@
         <div>
             <a href="#" class="btn btnRemove">삭제</a>
             <a href="/Jboard1/modify.jsp" class="btn btnModify">수정</a>
-            <a href="/Jboard1/list.jsp" class="btn btnList">목록</a>
+            <a href="/Jboard1/list.jsp?pg=<%= pg %>" class="btn btnList">목록</a>
         </div>
 
         <!-- 댓글목록 -->
