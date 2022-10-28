@@ -15,6 +15,7 @@ public class ArticleBean {
 	private String rdate;
 	
 	// 추가필드
+	private String fname;
 	private String nick;
 	
 	private int fno;
@@ -22,6 +23,13 @@ public class ArticleBean {
 	private String newName;
 	private String oriName;
 	private int download;
+	
+	public String getFname() {
+		return fname;
+	}
+	public void setFname(String fname) {
+		this.fname = fname;
+	}
 	
 	public int getFno() {
 		return fno;
