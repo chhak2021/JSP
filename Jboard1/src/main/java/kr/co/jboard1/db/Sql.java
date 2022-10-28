@@ -44,7 +44,11 @@ public class Sql {
 												+ "ORDER BY `no` DESC "
 												+ "LIMIT ?, 10";
 	
-	public static final String SELECT_ARTICLE = "select * from `board_article` where `no`=?";
+	public static final String SELECT_ARTICLE = "SELECT a.*, b.fno, b.parent AS pno, b.newName, b.oriName, b.download "
+												+ "FROM `board_article` AS a "
+												+ "LEFT JOIN `board_file` AS b "
+												+ "ON a.`no` = b.`parent` "
+												+ "WHERE `no`=?";
 	
 	
 }

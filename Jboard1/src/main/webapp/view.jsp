@@ -31,6 +31,11 @@
 			article.setUid(rs.getString(9));
 			article.setRegip(rs.getString(10));
 			article.setRdate(rs.getString(11));
+			article.setFno(rs.getInt(12));
+			article.setPno(rs.getInt(13));
+			article.setNewName(rs.getString(14));
+			article.setOriName(rs.getString(15));
+			article.setDownload(rs.getInt(16));
 		}
 		
 		rs.close();
@@ -51,12 +56,12 @@
             <caption>글보기</caption>
             <tr>
                 <th>제목</th>
-                <td><input type="text" name="title" value="제목입니다." readonly value="<%= article.getTitle() %>"/></td>
+                <td><input type="text" name="title" readonly value="<%= article.getTitle() %>"/></td>
             </tr>
             <% if(article.getFile() > 0){ %>
             <tr>
                 <th>파일</th>
-                <td><a href="#">2020년 상반기 매출자료.xls</a>&nbsp;<span>7</span>회 다운로드</td>
+                <td><a href="#"><%= article.getOriName() %></a>&nbsp;<span><%= article.getDownload() %></span>회 다운로드</td>
             </tr>
             <% } %>
             <tr>
