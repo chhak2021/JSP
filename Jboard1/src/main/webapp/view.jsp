@@ -14,6 +14,7 @@
 	
 	// 조회수 +1
 	dao.updateArticleHit(no);
+	
 	// 글 가져오기
 	ArticleBean article = dao.selectArticle(no);
 %>
@@ -29,7 +30,7 @@
             <% if(article.getFile() > 0){ %>
             <tr>
                 <th>파일</th>
-                <td><a href="#"><%= article.getOriName() %></a>&nbsp;<span><%= article.getDownload() %></span>회 다운로드</td>
+                <td><a href="/Jboard1/proc/download.jsp?parent=<%= article.getNo() %>"><%= article.getOriName() %></a>&nbsp;<span><%= article.getDownload() %></span>회 다운로드</td>
             </tr>
             <% } %>
             <tr>
