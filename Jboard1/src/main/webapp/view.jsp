@@ -1,3 +1,4 @@
+<%@page import="java.util.List"%>
 <%@page import="kr.co.jboard1.dao.ArticleDAO"%>
 <%@page import="kr.co.jboard1.bean.ArticleBean"%>
 <%@page import="java.sql.ResultSet"%>
@@ -18,6 +19,9 @@
 	
 	// 글 가져오기
 	ArticleBean article = dao.selectArticle(no);
+	
+	// 댓글 가져오기
+	List<ArticleBean> comments = dao.selectComments(no);
 %>
 <%@ include file="./_header.jsp" %>
 <main id="board">
@@ -51,19 +55,22 @@
         <!-- 댓글목록 -->
         <section class="commentList">
             <h3>댓글목록</h3>                   
-
+			
+			<% for(ArticleBean comment : comments){ %>
             <article>
-                <span class="nick">길동이</span>
-                <span class="date">20-05-20</span>
-                <p class="content">댓글 샘플 입니다.</p>                        
+                <span class="nick"><%= comment.getNick() %></span>
+                <span class="date"><%= comment.getRdate().substring(2, 10) %></span>
+                <p class="content"><%= comment.getContent() %></p>                        
                 <div>
                     <a href="#" class="remove">삭제</a>
                     <a href="#" class="modify">수정</a>
                 </div>
             </article>
-
+			<% } %>
+			
+			<% if(comments.size() == 0){ %>
             <p class="empty">등록된 댓글이 없습니다.</p>
-
+			<% } %>
         </section>
 
         <!-- 댓글쓰기 -->

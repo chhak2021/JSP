@@ -1,3 +1,5 @@
+<%@page import="kr.co.jboard1.bean.ArticleBean"%>
+<%@page import="kr.co.jboard1.dao.ArticleDAO"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="kr.co.jboard1.db.Sql"%>
 <%@page import="java.sql.Connection"%>
@@ -10,21 +12,14 @@
 	String content = request.getParameter("content");
 	String uid     = request.getParameter("uid");
 	String regip   = request.getRemoteAddr();
+
+	ArticleBean comment = new ArticleBean();
+	comment.setParent(no);
+	comment.setContent(content);
+	comment.setUid(uid);
+	comment.setRegip(regip);
 	
-	try{
-		Connection conn = DBCP.getConnection();
-		PreparedStatement psmt = conn.prepareStatement(Sql.INSERT_COMMENT);
-		psmt.setString(1, no);
-		psmt.setString(2, content);
-		psmt.setString(3, uid);
-		psmt.setString(4, regip);
-		
-		psmt.executeUpdate();
-		psmt.close();
-		conn.close();
-	}catch(Exception e){
-		e.printStackTrace();
-	}
+	ArticleDAO.getInstance().insertComment(comment);
 	
 	response.sendRedirect("/Jboard1/view.jsp?no="+no+"&pg="+pg);
 	

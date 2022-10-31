@@ -60,6 +60,11 @@ public class Sql {
 	
 	public static final String SELECT_FILE = "select * from `board_file` where `parent`=?";
 	
+	public static final String SELECT_COMMENTS = "SELECT a.*, b.`nick` FROM `board_article` AS a "
+												+ "JOIN `board_user` AS b "
+												+ "ON a.uid = b.uid "
+												+ "WHERE `parent`=? ORDER BY `no` ASC";
+	
 	public static final String UPDATE_ARTICLE_HIT = "UPDATE `board_article` SET `hit` = `hit` + 1 WHERE `no`=?";
 	public static final String UPDATE_FILE_DOWNLOAD = "update `board_file` set `download` = `download` + 1 where `fno`=?";
 	
