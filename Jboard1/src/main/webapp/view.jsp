@@ -31,9 +31,10 @@
 		
 		$('.commentForm > form').submit(function(){
 			
-			let no = $('input[name=no]').val();
-			let uid = "<%= ub.getUid() %>";
-			let content = $('textarea[name=content]').val();
+			let no      = $(this).children('input[name=no]').val();
+			let uid     = $(this).children('input[name=uid]').val();
+			let nick    = $(this).children('input[name=nick]').val();
+			let content = $(this).children('textarea[name=content]').val();
 			
 			if(content == ''){
 				alert('댓글을 작성하세요.');
@@ -46,7 +47,6 @@
 				"content": content
 			};
 			
-			
 			$.ajax({
 				url: '/Jboard1/proc/commentWriteProc.jsp',
 				method: 'POST',
@@ -54,13 +54,27 @@
 				dataType: 'json',
 				success: function(data){
 					console.log(data);
+					
+					if(data.result > 0){
+						
+						let article = "<article>";
+							article += "<span class='nick'>"+data.nick+"</span>";
+							article += "<span class='date'>"+data.date+"</span>";
+							article += "<p class='content'>"+data.content+"</p>";
+							article += "<div>";
+							article += "<a href='#' class='remove'>삭제</a>";
+							article += "<a href='#' class='modify'>수정</a>";
+							article += "</div>";
+							article += "</article>";
+						
+						$('.commentList').append(article);
+					}
 				}
 			});
-		});
-		
-		
-	});
 
+			return false;
+		});
+	});
 </script>
 
 <main id="board">
@@ -116,9 +130,9 @@
         <section class="commentForm">
             <h3>댓글쓰기</h3>
             <form action="#" method="post">
-            	<input type="hidden" name="uid" value="<%= ub.getUid() %>">
             	<input type="hidden" name="no" value="<%= no %>">
-            	<input type="hidden" name="pg" value="<%= pg %>">
+            	<input type="hidden" name="uid" value="<%= ub.getUid() %>">
+            	<input type="hidden" name="nick" value="<%= ub.getNick() %>">
                 <textarea name="content" placeholder="댓글을 입력하세요."></textarea>
                 <div>
                     <a href="#" class="btn btnCancel">취소</a>

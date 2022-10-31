@@ -78,21 +78,45 @@ public class ArticleDAO {
 		}
 	}
 	
-	public void insertComment(ArticleBean comment) {
+	public ArticleBean insertComment(ArticleBean comment) {
+		
+		ArticleBean article = null;
+		int result = 0;
+		
 		try{
 			Connection conn = DBCP.getConnection();
+			
+			conn.setAutoCommit(false);
 			PreparedStatement psmt = conn.prepareStatement(Sql.INSERT_COMMENT);
+			Statement stmt = conn.createStatement();
 			psmt.setInt(1, comment.getParent());
 			psmt.setString(2, comment.getContent());
 			psmt.setString(3, comment.getUid());
 			psmt.setString(4, comment.getRegip());
 			
-			psmt.executeUpdate();
+			result = psmt.executeUpdate();
+			ResultSet rs = stmt.executeQuery(Sql.SELECT_COMMENT_LATEST);
+			
+			conn.commit();
+			
+			if(rs.next()) {
+				article = new ArticleBean();
+				article.setNo(rs.getInt(1));
+				article.setContent(rs.getString(6));
+				article.setRdate(rs.getString(11).substring(2, 10));
+				article.setNick(rs.getString(12));
+			}
+			
+			rs.close();
+			stmt.close();
 			psmt.close();
 			conn.close();
+			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+		
+		return article;
 	}
 	
 	public int selectCountTotal() {
@@ -264,6 +288,8 @@ public class ArticleDAO {
 		
 		return comments;
 	}
+	
+	
 	
 	public void updateArticle() {}
 	
