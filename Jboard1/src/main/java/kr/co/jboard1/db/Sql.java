@@ -29,11 +29,19 @@ public class Sql {
 												+ "`uid`=?,"
 												+ "`regip`=?,"
 												+ "`rdate`=NOW()";
-	
+		
 	public static final String INSERT_FILE = "insert into `board_file` set "
 											+ "`parent`=?,"
 											+ "`newName`=?,"
 											+ "`oriName`=?";
+	
+	public static final String INSERT_COMMENT = "insert into `board_article` set "
+												+ "`parent`=?,"
+												+ "`content`=?,"
+												+ "`uid`=?,"
+												+ "`regip`=?,"
+												+ "`rdate`=NOW()";
+	
 	
 	public static final String SELECT_MAX_NO = "SELECT MAX(`no`) FROM `board_article`";
 	public static final String SELECT_COUNT_TOTAL = "SELECT COUNT(`no`) FROM `board_article`";

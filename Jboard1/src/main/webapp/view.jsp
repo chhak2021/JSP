@@ -69,8 +69,11 @@
         <!-- 댓글쓰기 -->
         <section class="commentForm">
             <h3>댓글쓰기</h3>
-            <form action="#">
-                <textarea name="content">댓글내용 입력</textarea>
+            <form action="/Jboard1/proc/commentWriteProc.jsp" method="post">
+            	<input type="hidden" name="uid" value="<%= ub.getUid() %>">
+            	<input type="hidden" name="no" value="<%= no %>">
+            	<input type="hidden" name="pg" value="<%= pg %>">
+                <textarea name="content" placeholder="댓글을 입력하세요."></textarea>
                 <div>
                     <a href="#" class="btn btnCancel">취소</a>
                     <input type="submit" value="작성완료" class="btn btnComplete"/>
