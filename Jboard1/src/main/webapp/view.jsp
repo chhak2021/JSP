@@ -24,6 +24,45 @@
 	List<ArticleBean> comments = dao.selectComments(no);
 %>
 <%@ include file="./_header.jsp" %>
+<script>
+
+	$(document).ready(function(){
+		
+		
+		$('.commentForm > form').submit(function(){
+			
+			let no = $('input[name=no]').val();
+			let uid = "<%= ub.getUid() %>";
+			let content = $('textarea[name=content]').val();
+			
+			if(content == ''){
+				alert('댓글을 작성하세요.');
+				return false;
+			}
+			
+			let jsonData = {
+				"no": no,
+				"uid": uid,
+				"content": content
+			};
+			
+			
+			$.ajax({
+				url: '/Jboard1/proc/commentWriteProc.jsp',
+				method: 'POST',
+				data: jsonData,
+				dataType: 'json',
+				success: function(data){
+					console.log(data);
+				}
+			});
+		});
+		
+		
+	});
+
+</script>
+
 <main id="board">
     <section class="view">
         <table border="0">
@@ -60,7 +99,7 @@
             <article>
                 <span class="nick"><%= comment.getNick() %></span>
                 <span class="date"><%= comment.getRdate().substring(2, 10) %></span>
-                <p class="content"><%= comment.getContent() %></p>                        
+                <p class="content"><%= comment.getContent() %></p>
                 <div>
                     <a href="#" class="remove">삭제</a>
                     <a href="#" class="modify">수정</a>
@@ -70,13 +109,13 @@
 			
 			<% if(comments.size() == 0){ %>
             <p class="empty">등록된 댓글이 없습니다.</p>
-			<% } %>
+            <% } %>
         </section>
 
         <!-- 댓글쓰기 -->
         <section class="commentForm">
             <h3>댓글쓰기</h3>
-            <form action="/Jboard1/proc/commentWriteProc.jsp" method="post">
+            <form action="#" method="post">
             	<input type="hidden" name="uid" value="<%= ub.getUid() %>">
             	<input type="hidden" name="no" value="<%= no %>">
             	<input type="hidden" name="pg" value="<%= pg %>">

@@ -8,7 +8,7 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	String no 	   = request.getParameter("no");
-	String pg  	   = request.getParameter("pg");
+	//String pg  	   = request.getParameter("pg");
 	String content = request.getParameter("content");
 	String uid     = request.getParameter("uid");
 	String regip   = request.getRemoteAddr();
@@ -21,6 +21,6 @@
 	
 	ArticleDAO.getInstance().insertComment(comment);
 	
-	response.sendRedirect("/Jboard1/view.jsp?no="+no+"&pg="+pg);
+	//response.sendRedirect("/Jboard1/view.jsp?no="+no+"&pg="+pg);
 	
 %>
