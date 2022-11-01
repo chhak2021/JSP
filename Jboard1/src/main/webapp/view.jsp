@@ -35,6 +35,10 @@
 			let isDeleteOk = confirm('정말 삭제 하시겠습니까?');
 			
 			if(isDeleteOk){
+				
+				let no = $(this).attr('data-no');
+				let jsonData = {"no": no};
+				
 				$.ajax({
 					url: '/Jboard1/proc/commentDeleteProc.jsp',
 					type: 'GET',
