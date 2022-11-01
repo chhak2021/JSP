@@ -73,6 +73,12 @@ public class Sql {
 	public static final String UPDATE_ARTICLE_HIT = "UPDATE `board_article` SET `hit` = `hit` + 1 WHERE `no`=?";
 	public static final String UPDATE_FILE_DOWNLOAD = "update `board_file` set `download` = `download` + 1 where `fno`=?";
 	
+	public static final String UPDATE_COMMENT = "update `board_article` set "
+												+ "`content`=?,"
+												+ "`rdate`=NOW() "
+												+ "where `no`=?";
+	
+	
 }
 
 
