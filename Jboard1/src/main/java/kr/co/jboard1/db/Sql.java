@@ -78,7 +78,7 @@ public class Sql {
 												+ "`rdate`=NOW() "
 												+ "where `no`=?";
 	
-	
+	public static final String DELETE_COMMENT  = "delete from `board_article` where `no`=?";
 }
 
 

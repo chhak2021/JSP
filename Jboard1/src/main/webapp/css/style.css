@@ -383,7 +383,9 @@ footer > p {
 #board > .view > .commentList > article {overflow: hidden;}        
 #board > .view > .commentList .nick {}
 #board > .view > .commentList .date {}
-#board > .view > .commentList .content {padding: 10px;}
+#board > .view > .commentList .content {	
+	padding: 10px;
+}
 #board > .view > .commentList > article > div {float: right;}
 #board > .view > .commentList > article .remove {}
 #board > .view > .commentList > article .modify {}

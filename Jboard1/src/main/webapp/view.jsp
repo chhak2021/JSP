@@ -28,6 +28,29 @@
 
 	$(document).ready(function(){
 		
+		// 댓글 삭제
+		$(document).on('click', '.remove', function(e){
+			e.preventDefault();
+			
+			let isDeleteOk = confirm('정말 삭제 하시겠습니까?');
+			
+			if(isDeleteOk){
+				$.ajax({
+					url: '/Jboard1/proc/commentDeleteProc.jsp',
+					type: 'GET',
+					data: jsonData,
+					dataType: 'json',
+					success: function(data){
+						
+						if(data.result == 1){
+							alert('댓글이 삭제되었습니다.');						
+						}
+					}
+				});
+			}
+			
+		});
+		
 		// 댓글 수정
 		$(document).on('click', '.modify', function(e){
 			e.preventDefault();
@@ -42,6 +65,8 @@
 				p_tag.focus();	
 			}else{
 				// 수정완료
+				$(this).text('수정');	
+				
 				let no = $(this).attr('data-no');
 				let content = p_tag.text();
 				
@@ -61,13 +86,10 @@
 						
 						if(data.result == 1){
 							alert('댓글이 수정되었습니다.');
-							$(this).text('수정');				
 							p_tag.attr('contentEditable', false);
 						}
-						
 					}
 				});
-				
 				
 			}
 		});
