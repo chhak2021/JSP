@@ -36,6 +36,7 @@
 			
 			if(isDeleteOk){
 				
+				let article = $(this).closest('article');
 				let no = $(this).attr('data-no');
 				let jsonData = {"no": no};
 				
@@ -45,9 +46,9 @@
 					data: jsonData,
 					dataType: 'json',
 					success: function(data){
-						
 						if(data.result == 1){
-							alert('댓글이 삭제되었습니다.');						
+							alert('댓글이 삭제되었습니다.');							
+							article.hide();
 						}
 					}
 				});
@@ -132,8 +133,8 @@
 							article += "<span class='date'>"+data.date+"</span>";
 							article += "<p class='content'>"+data.content+"</p>";
 							article += "<div>";
-							article += "<a href='#' class='remove'>삭제</a>";
-							article += "<a href='#' class='modify'>수정</a>";
+							article += "<a href='#' class='remove' data-no='"+data.no+"'>삭제</a>";
+							article += "<a href='#' class='modify' data-no='"+data.no+"'>수정</a>";
 							article += "</div>";
 							article += "</article>";
 						
