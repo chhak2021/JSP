@@ -28,6 +28,17 @@
 
 	$(document).ready(function(){
 		
+		// 글 삭제
+		$('.btnRemove').click(function(){
+			let isDelete = confirm('정말 삭제 하시겠습니까?');
+			if(isDelete){
+				return true;
+			}else{
+				return false;
+			}
+		});
+		
+		
 		// 댓글 삭제
 		$(document).on('click', '.remove', function(e){
 			e.preventDefault();
