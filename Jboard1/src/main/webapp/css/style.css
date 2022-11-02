@@ -385,6 +385,7 @@ footer > p {
 #board > .view > .commentList .date {}
 #board > .view > .commentList .content {	
 	padding: 10px;
+	white-space: pre-wrap;
 }
 #board > .view > .commentList > article > div {float: right;}
 #board > .view > .commentList > article .remove {}

@@ -25,7 +25,6 @@
 %>
 <%@ include file="./_header.jsp" %>
 <script>
-
 	$(document).ready(function(){
 		
 		// 댓글 삭제
@@ -53,7 +52,6 @@
 					}
 				});
 			}
-			
 		});
 		
 		// 댓글 수정
@@ -95,7 +93,6 @@
 						}
 					}
 				});
-				
 			}
 		});
 		
@@ -175,7 +172,7 @@
         
         <div>
             <a href="#" class="btn btnRemove">삭제</a>
-            <a href="/Jboard1/modify.jsp" class="btn btnModify">수정</a>
+            <a href="/Jboard1/modify.jsp?no=<%= article.getNo() %>&pg=<%= pg %>" class="btn btnModify">수정</a>
             <a href="/Jboard1/list.jsp?pg=<%= pg %>" class="btn btnList">목록</a>
         </div>
 

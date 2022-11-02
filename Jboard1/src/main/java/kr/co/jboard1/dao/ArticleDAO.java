@@ -289,7 +289,21 @@ public class ArticleDAO {
 		return comments;
 	}
 	
-	public void updateArticle() {}
+	public void updateArticle(String no, String title, String content) {
+		try {
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.UPDATE_ARTICLE);
+			psmt.setString(1, title);
+			psmt.setString(2, content);
+			psmt.setString(3, no);
+			
+			psmt.executeUpdate();
+			psmt.close();
+			conn.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public void updateArticleHit(String no) {
 		try {
