@@ -11,7 +11,7 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	String pg = request.getParameter("pg");
-
+	
 	// 게시물 목록 처리 관련 변수 선언
 	int limitStart = 0;
 	int currentPage = 1;

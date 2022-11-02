@@ -11,7 +11,6 @@
 	request.setCharacterEncoding("UTF-8");
 	String no = request.getParameter("no");
 	String pg = request.getParameter("pg");
-	String modify = request.getParameter("modify");
 	
 	ArticleDAO dao = ArticleDAO.getInstance();
 	
@@ -26,11 +25,6 @@
 %>
 <%@ include file="./_header.jsp" %>
 <script>
-	let modify = "<%= modify %>";
-	
-	if(modify == 'success'){
-		alert('수정완료!');
-	}
 
 	$(document).ready(function(){
 		
@@ -178,7 +172,7 @@
         </table>
         
         <div>
-            <a href="#" class="btn btnRemove">삭제</a>
+            <a href="/Jboard1/proc/deleteProc.jsp?no=<%= article.getNo() %>&pg=<%= pg %>" class="btn btnRemove">삭제</a>
             <a href="/Jboard1/modify.jsp?no=<%= article.getNo() %>&pg=<%= pg %>" class="btn btnModify">수정</a>
             <a href="/Jboard1/list.jsp?pg=<%= pg %>" class="btn btnList">목록</a>
         </div>

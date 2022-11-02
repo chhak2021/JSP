@@ -9,5 +9,5 @@
 	
 	ArticleDAO.getInstance().updateArticle(no, title, content);
 
-	response.sendRedirect("/Jboard1/view.jsp?no="+no+"&pg="+pg+"&modify=success");
+	response.sendRedirect("/Jboard1/view.jsp?no="+no+"&pg="+pg+"&result=201");
 %>

@@ -349,7 +349,20 @@ public class ArticleDAO {
 		return result;
 	}
 	
-	public void deleteArticle() {}
+	public void deleteArticle(String no) {
+		try {
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.DELETE_ARTICLE);
+			psmt.setString(1, no);
+			psmt.setString(2, no);
+			psmt.executeUpdate();
+			psmt.close();
+			conn.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 	
 	public int deleteComment(String no) {
 		int result = 0;
