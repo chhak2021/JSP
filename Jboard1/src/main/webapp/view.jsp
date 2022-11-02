@@ -11,6 +11,7 @@
 	request.setCharacterEncoding("UTF-8");
 	String no = request.getParameter("no");
 	String pg = request.getParameter("pg");
+	String modify = request.getParameter("modify");
 	
 	ArticleDAO dao = ArticleDAO.getInstance();
 	
@@ -25,6 +26,12 @@
 %>
 <%@ include file="./_header.jsp" %>
 <script>
+	let modify = "<%= modify %>";
+	
+	if(modify == 'success'){
+		alert('수정완료!');
+	}
+
 	$(document).ready(function(){
 		
 		// 댓글 삭제

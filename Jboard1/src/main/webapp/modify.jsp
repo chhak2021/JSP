@@ -5,18 +5,10 @@
 	request.setCharacterEncoding("UTF-8");
 	String no = request.getParameter("no");
 	String pg = request.getParameter("pg");
-	String modify = request.getParameter("modify");
 	
 	ArticleBean article = ArticleDAO.getInstance().selectArticle(no);
 %>
 <%@ include file="./_header.jsp" %>
-<script>
-	let modify = "<%= modify %>";
-	if(modify == 'success'){
-		alert('수정완료!');
-	}
-
-</script>
 <main id="board">
     <section class="modify">
         <form action="/Jboard1/proc/modifyProc.jsp" method="post">
