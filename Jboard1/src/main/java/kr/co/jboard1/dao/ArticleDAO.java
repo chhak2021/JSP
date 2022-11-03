@@ -7,6 +7,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import kr.co.jboard1.bean.ArticleBean;
 import kr.co.jboard1.bean.FileBean;
 import kr.co.jboard1.db.DBCP;
@@ -15,6 +18,9 @@ import kr.co.jboard1.db.Sql;
 // DAO(Data Access Object) : 데이터베이스 처리 클래스
 public class ArticleDAO {
 
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+	
 	private static ArticleDAO instance = new ArticleDAO();
 	public static ArticleDAO getInstance() {
 		return instance;
@@ -57,6 +63,7 @@ public class ArticleDAO {
 			
 		}catch(Exception e){
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		return parent;
 	}
@@ -75,6 +82,7 @@ public class ArticleDAO {
 			conn.close();			
 		}catch(Exception e){
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -120,6 +128,7 @@ public class ArticleDAO {
 			
 		}catch(Exception e){
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		
 		return article;
@@ -130,6 +139,7 @@ public class ArticleDAO {
 		int total = 0;
 		
 		try {
+			logger.info("selectCountTotal");
 			Connection conn = DBCP.getConnection();
 			Statement stmt = conn.createStatement();
 			
@@ -143,6 +153,7 @@ public class ArticleDAO {
 			conn.close();
 		}catch (Exception e) {
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		return total;
 	}
@@ -184,6 +195,7 @@ public class ArticleDAO {
 			
 		}catch(Exception e){
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		
 		return article;
