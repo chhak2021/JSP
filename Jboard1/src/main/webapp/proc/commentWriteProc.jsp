@@ -25,6 +25,7 @@
 	JsonObject json = new JsonObject();
 	json.addProperty("result", 1);
 	json.addProperty("no", article.getNo());
+	json.addProperty("parent", article.getParent());
 	json.addProperty("nick", article.getNick());
 	json.addProperty("date", article.getRdate());
 	json.addProperty("content", article.getContent());

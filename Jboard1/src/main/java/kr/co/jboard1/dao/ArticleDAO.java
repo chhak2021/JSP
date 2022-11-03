@@ -87,14 +87,18 @@ public class ArticleDAO {
 			Connection conn = DBCP.getConnection();
 			
 			conn.setAutoCommit(false);
-			PreparedStatement psmt = conn.prepareStatement(Sql.INSERT_COMMENT);
+			PreparedStatement psmt1 = conn.prepareStatement(Sql.INSERT_COMMENT);
+			PreparedStatement psmt2 = conn.prepareStatement(Sql.UPDATE_ARTICLE_COMMENT_PLUS);
 			Statement stmt = conn.createStatement();
-			psmt.setInt(1, comment.getParent());
-			psmt.setString(2, comment.getContent());
-			psmt.setString(3, comment.getUid());
-			psmt.setString(4, comment.getRegip());
+			psmt1.setInt(1, comment.getParent());
+			psmt1.setString(2, comment.getContent());
+			psmt1.setString(3, comment.getUid());
+			psmt1.setString(4, comment.getRegip());
 			
-			result = psmt.executeUpdate();
+			psmt2.setInt(1, comment.getParent());
+			
+			result = psmt1.executeUpdate();
+			psmt2.executeUpdate();
 			ResultSet rs = stmt.executeQuery(Sql.SELECT_COMMENT_LATEST);
 			
 			conn.commit();
@@ -102,6 +106,7 @@ public class ArticleDAO {
 			if(rs.next()) {
 				article = new ArticleBean();
 				article.setNo(rs.getInt(1));
+				article.setParent(rs.getInt(2));
 				article.setContent(rs.getString(6));
 				article.setRdate(rs.getString(11).substring(2, 10));
 				article.setNick(rs.getString(12));
@@ -109,7 +114,8 @@ public class ArticleDAO {
 			
 			rs.close();
 			stmt.close();
-			psmt.close();
+			psmt1.close();
+			psmt2.close();
 			conn.close();
 			
 		}catch(Exception e){
@@ -398,14 +404,23 @@ public class ArticleDAO {
 		return newName;
 	}
 	
-	public int deleteComment(String no) {
+	public int deleteComment(String no, String parent) {
 		int result = 0;
 		try {
 			Connection conn = DBCP.getConnection();
-			PreparedStatement psmt = conn.prepareStatement(Sql.DELETE_COMMENT);
-			psmt.setString(1, no);
-			result = psmt.executeUpdate();
-			psmt.close();
+			
+			conn.setAutoCommit(false);
+			PreparedStatement psmt1 = conn.prepareStatement(Sql.DELETE_COMMENT);
+			PreparedStatement psmt2 = conn.prepareStatement(Sql.UPDATE_ARTICLE_COMMENT_MINUS);
+			psmt1.setString(1, no);
+			psmt2.setString(1, parent);
+			result = psmt1.executeUpdate();
+			psmt2.executeUpdate();
+			
+			conn.commit();
+			
+			psmt1.close();
+			psmt2.close();
 			conn.close();
 		}catch (Exception e) {
 			e.printStackTrace();
