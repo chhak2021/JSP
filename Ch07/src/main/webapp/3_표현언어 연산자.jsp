@@ -53,7 +53,5 @@
 			str3 eq "hello" = ${str3 eq "hello"}<br/>
 			str3 eq "welcome" = ${str3 eq "welcome"}<br/>			
 		</p>
-		
-		
 	</body>
 </html>
