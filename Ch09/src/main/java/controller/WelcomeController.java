@@ -9,8 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import service.HelloService;
-import service.WelcomeService;
+import service.CommonService;
+import service.HelloServiceImpl;
+import service.WelcomeServiceImpl;
 
 @WebServlet("/welcome.do")
 public class WelcomeController extends HttpServlet {
@@ -33,7 +34,7 @@ public class WelcomeController extends HttpServlet {
 	
 	public void requestProc(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		WelcomeService service = WelcomeService.getInstance();
+		CommonService service = WelcomeServiceImpl.getInstance();
 		String view = service.requestProc(req, resp);
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher(view);

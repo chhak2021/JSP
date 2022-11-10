@@ -3,15 +3,15 @@ package service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class GreetingService {
+public class GreetingServiceImpl implements CommonService {
 	
-	private static GreetingService instance = new GreetingService();
-	public static GreetingService getInstance() {
+	private static GreetingServiceImpl instance = new GreetingServiceImpl();
+	public static GreetingServiceImpl getInstance() {
 		return instance;
 	}
-	private GreetingService() {}
+	private GreetingServiceImpl() {}
 
-	
+	@Override
 	public String requestProc(HttpServletRequest req, HttpServletResponse resp) {
 		return "/greeting.jsp";
 	}

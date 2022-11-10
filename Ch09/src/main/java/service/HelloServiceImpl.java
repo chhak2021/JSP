@@ -3,15 +3,15 @@ package service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class HelloService {
+public class HelloServiceImpl implements CommonService {
 	
-	private static HelloService instance = new HelloService();
-	public static HelloService getInstance() {
+	private static HelloServiceImpl instance = new HelloServiceImpl();
+	public static HelloServiceImpl getInstance() {
 		return instance;
 	}
-	private HelloService() {}
+	private HelloServiceImpl() {}
 
-	
+	@Override
 	public String requestProc(HttpServletRequest req, HttpServletResponse resp) {
 		return "/hello.jsp";
 	}
