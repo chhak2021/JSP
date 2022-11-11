@@ -21,13 +21,13 @@
 			</tr>
 			<c:forEach var="user" items="${requestScope.users}">
 				<tr>
-					<td>${user.getUid()}</td>
-					<td>${user.getName()}</td>
-					<td>${user.getHp()}</td>
-					<td>${user.getAge()}</td>
+					<td>${user.uid}</td>
+					<td>${user.name}</td>
+					<td>${user.hp}</td>
+					<td>${user.age}</td>
 					<td>
-						<a href="/Ch09/user1/modify.do">수정</a>
-						<a href="#">삭제</a>
+						<a href="/Ch09/user1/modify.do?uid=${user.uid}">수정</a>
+						<a href="/Ch09/user1/delete.do?uid=${user.uid}">삭제</a>
 					</td>				
 				</tr>
 			</c:forEach>

@@ -27,6 +27,7 @@ public class ListController extends HttpServlet {
 		
 		List<User1VO> users = User1DAO.getInstance().selectUser1s();
 		
+		// view와 데이터를 공유하기 위해 request 영역에 설정 
 		req.setAttribute("users", users);
 		
 		// 포워드
