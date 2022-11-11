@@ -8,7 +8,7 @@
 	</head>
 	<body>
 		<h3>user1 목록</h3>
-		<a href="#">처음으로</a>
+		<a href="/Ch09/">처음으로</a>
 		<a href="/Ch09/user1/register.do">user1 등록</a>
 		
 		<table border="1">

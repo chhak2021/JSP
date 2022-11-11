@@ -11,9 +11,9 @@
 		-->
 	</head>
 	<body>
-		<h3>MVC 모델 실습</h3>
+		<h3>MVC 기본</h3>
 		<h1>hello</h1>
-		
+		<a href="/Ch09/">처음으로</a>
 		<a href="/Ch09/hello.do">hello</a>
 		<a href="/Ch09/welcome.do">welcome</a>
 		<a href="/Ch09/greeting.do">greeting</a>

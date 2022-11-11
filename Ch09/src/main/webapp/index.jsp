@@ -8,7 +8,7 @@
 	<body>
 		<h3>MVC 실습</h3>
 		
-		<h4>MVC 실습하기</h4>
+		<h4>MVC 기본</h4>
 		<a href="/Ch09/hello.do">hello</a>
 		<a href="/Ch09/welcome.do">welcome</a>
 		<a href="/Ch09/greeting.do">greeting</a>
