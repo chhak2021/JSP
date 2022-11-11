@@ -30,7 +30,6 @@ public class RegisterController extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
 		String uid  = req.getParameter("uid");
 		String name = req.getParameter("name");
 		String hp   = req.getParameter("hp");
