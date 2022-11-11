@@ -22,6 +22,14 @@
   	</auth-constraint>  
   </security-constraint>
   
+  <security-constraint>
+  	<web-resource-collection>
+  		<web-resource-name>free pages</web-resource-name>
+  		<url-pattern>/index.jsp</url-pattern>
+  	</web-resource-collection>
+  </security-constraint>
+  
+  
   <!-- 필터 설정 -->
   <filter>
   	<filter-name>SetCharacterEncodingFilter</filter-name>

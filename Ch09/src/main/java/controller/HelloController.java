@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import service.CommonService;
-import service.HelloServiceImpl;
 
 @WebServlet("/hello.do")
 public class HelloController extends HttpServlet {
@@ -23,21 +21,12 @@ public class HelloController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		requestProc(req, resp);
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/hello.jsp");
+		dispatcher.forward(req, resp);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		requestProc(req, resp);
-	}
-	
-	public void requestProc(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		CommonService service = HelloServiceImpl.getInstance();
-		String view = service.requestProc(req, resp);
-		
-		RequestDispatcher dispatcher = req.getRequestDispatcher(view);
-		dispatcher.forward(req, resp);
 	}
 	
 }
