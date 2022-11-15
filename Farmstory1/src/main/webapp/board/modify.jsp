@@ -1,20 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>글수정</title>
-    <link rel="stylesheet" href="./css/style.css"/>    
-</head>
-<body>
-    <div id="wrapper">
-        <header>
-            <h3>Board System v1.0</h3>
-            <p>
-                <span>홍길동</span>님 반갑습니다.
-                <a href="#">[로그아웃]</a>
-            </p>
-        </header>
+<%@ include file="/_header.jsp" %>
+<%
+	String group = request.getParameter("group");
+	String cate  = request.getParameter("cate");
+	pageContext.include("/board/_"+group+".jsp");
+%>
         <main id="board">
             <section class="modify">
 
@@ -40,16 +30,14 @@
                     </table>
                     
                     <div>
-                        <a href="./view.html" class="btn btnCancel">취소</a>
+                        <a href="./view.jsp?group=<%= group %>&cate=<%= cate %>" class="btn btnCancel">취소</a>
                         <input type="submit" value="작성완료" class="btn btnComplete"/>
                     </div>
                 </form>
 
             </section>
         </main>
-        <footer>
-            <p>ⓒCopyright chhak.or.kr</p>
-        </footer>
-    </div>    
-</body>
-</html>
+        </article>
+</section>
+</div>
+<%@ include file="/_footer.jsp" %>

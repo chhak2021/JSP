@@ -1,20 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>글보기</title>
-    <link rel="stylesheet" href="./css/style.css"/>
-</head>
-<body>
-    <div id="wrapper">
-        <header>
-            <h3>Board System v1.0</h3>
-            <p>
-                <span>홍길동</span>님 반갑습니다.
-                <a href="#">[로그아웃]</a>
-            </p>
-        </header>
+<%@ include file="/_header.jsp" %>
+<%
+	String group = request.getParameter("group");
+	String cate  = request.getParameter("cate");
+	pageContext.include("/board/_"+group+".jsp");
+%>
         <main id="board">
             <section class="view">
                 
@@ -38,8 +28,8 @@
                 
                 <div>
                     <a href="#" class="btn btnRemove">삭제</a>
-                    <a href="./modify.html" class="btn btnModify">수정</a>
-                    <a href="./list.html" class="btn btnList">목록</a>
+                    <a href="./modify.jsp?group=<%= group %>&cate=<%= cate %>" class="btn btnModify">수정</a>
+                    <a href="./list.jsp?group=<%= group %>&cate=<%= cate %>" class="btn btnList">목록</a>
                 </div>
 
                 <!-- 댓글목록 -->
@@ -74,9 +64,7 @@
 
             </section>
         </main>
-        <footer>
-            <p>ⓒCopyright chhak.or.kr</p>
-        </footer>
-    </div>    
-</body>
-</html>
+        </article>
+</section>
+</div>
+<%@ include file="/_footer.jsp" %>
