@@ -2,7 +2,6 @@
 <%@ include file="/_header.jsp" %>
 <%
 	String group = request.getParameter("group");
-
 	pageContext.include("/board/_"+group+".jsp");
 %>
 <main id="board">
