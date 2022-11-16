@@ -44,7 +44,6 @@ public enum UserDAO {
 		return tb;
 	}
 	public UserBean selectUser(String uid, String pass) {
-		
 		UserBean ub = null;
 		try {
 			logger.info("selectUser...");
@@ -70,7 +69,6 @@ public enum UserDAO {
 				ub.setRegip(rs.getString(11));
 				ub.setRdate(rs.getString(12));
 			}
-			
 			rs.close();
 			psmt.close();
 			conn.close();
@@ -78,18 +76,12 @@ public enum UserDAO {
 		}catch (Exception e) {
 			logger.error(e.getMessage());
 		}
-		
 		logger.debug("ub : "+ub);
-		
 		return ub;
 	}
-	
 	
 	public void selectUsers() {}
 	public void updateUser() {}
 	public void deleteUser() {}
-	
-
-	
 	
 }
