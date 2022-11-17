@@ -1,7 +1,9 @@
 package kr.co.farmstory1.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -114,6 +116,7 @@ public class ArticleDAO extends DBHelper {
 	
 	public List<ArticleBean> selectLatests(String cate1, String cate2, String cate3) {
 		
+		Map<String, List<ArticleBean>> maps = new HashMap<>();
 		List<ArticleBean> latests = new ArrayList<>();
 		
 		try {
@@ -141,6 +144,37 @@ public class ArticleDAO extends DBHelper {
 		}catch (Exception e) {
 			logger.error(e.getMessage());
 		}
+		return latests;
+	}
+	
+	public synchronized List<ArticleBean> selectLatests(String cate) {
+		
+		List<ArticleBean> latests = new ArrayList<>();
+		
+		try {
+			logger.info("selectLatests(String)...");
+			
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_LATEST);
+			psmt.setString(1, cate);
+			
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				ArticleBean ab = new ArticleBean();
+				ab.setNo(rs.getInt(1));
+				ab.setTitle(rs.getString(2));
+				ab.setRdate(rs.getString(3).substring(2, 10));
+				
+				latests.add(ab);
+			}
+			close();
+		}catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		
+		logger.info("latests size : " + latests.size());
+		
 		return latests;
 	}
 	
