@@ -112,6 +112,38 @@ public class ArticleDAO extends DBHelper {
 		return articles;
 	}
 	
+	public List<ArticleBean> selectLatests(String cate1, String cate2, String cate3) {
+		
+		List<ArticleBean> latests = new ArrayList<>();
+		
+		try {
+			logger.info("selectLatests...");
+			
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_LATESTS);
+			psmt.setString(1, cate1);
+			psmt.setString(2, cate2);
+			psmt.setString(3, cate3);
+			
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				ArticleBean ab = new ArticleBean();
+				ab.setNo(rs.getInt(1));
+				ab.setTitle(rs.getString(2));
+				ab.setRdate(rs.getString(3).substring(2, 10));
+				
+				latests.add(ab);
+			}
+			
+			close();
+			
+		}catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return latests;
+	}
+	
 	public int selectCountTotal(String cate) {
 		
 		int total = 0;
