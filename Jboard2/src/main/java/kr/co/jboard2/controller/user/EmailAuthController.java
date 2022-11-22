@@ -1,20 +1,28 @@
 package kr.co.jboard2.controller.user;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Properties;
 
-import javax.servlet.RequestDispatcher;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.co.jboard2.dao.UserDAO;
-import kr.co.jboard2.service.user.UserService;
-import kr.co.jboard2.vo.TermsVO;
+import com.google.gson.JsonObject;
 
-@WebServlet("/user/terms.do")
-public class TermsController extends HttpServlet {
+import kr.co.jboard2.service.user.UserService;
+
+@WebServlet("/user/emailAuth.do")
+public class EmailAuthController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private UserService service = UserService.INSTANCE;
@@ -26,14 +34,22 @@ public class TermsController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		TermsVO vo = service.selectTerms();
-		req.setAttribute("vo", vo);
+		String email = req.getParameter("email");
 		
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/user/terms.jsp");
-		dispatcher.forward(req, resp);
+		int[] result = service.sendEmailCode(email);
+		
+		// JSON 출력
+		JsonObject json = new JsonObject();
+		json.addProperty("status", result[0]);
+		json.addProperty("code", result[1]);
+		
+		PrintWriter writer = resp.getWriter();
+		writer.print(json.toString());
+		
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	}
+	
 }
