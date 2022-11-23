@@ -3,6 +3,10 @@
 <script src="http://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="/Jboard2/js/zipcode.js"></script>
 <script src="/Jboard2/js/validation.js"></script>
+<script>
+	
+
+</script>
 <main id="user">
     <section class="register">
         <form action="/Jboard2/user/register.do" method="post">
