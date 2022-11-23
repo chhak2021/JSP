@@ -22,8 +22,8 @@
                 아직 회원이 아니시면 회원으로 가입하세요.
             </p>
             <div style="text-align: right;">
-                <a href="./findId.html">아이디 |</a>
-                <a href="./findPw.html">비밀번호찾기 |</a>
+                <a href="/Jboard2/user/findId.do">아이디 |</a>
+                <a href="/Jboard2/user/findPw.do">비밀번호찾기 |</a>
                 <a href="/Jboard2/user/terms.do">회원가입</a>
             </div>                    
         </div>

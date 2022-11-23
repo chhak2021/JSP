@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="./_header.jsp"/>
+<script src="/Jboard2/js/emailAuth.js"></script>
 <main id="user">
     <section class="find findId">
         <form action="#">
@@ -14,11 +15,12 @@
                     <td>
                         <div>
                             <input type="email" name="email" placeholder="이메일 입력"/>
-                            <button type="button" class="btnAuth">인증번호 받기</button>
+                            <span class="resultEmail"></span>
+                            <button type="button" class="btnAuth" id="btnEmail">인증번호 받기</button>
                         </div>
                         <div>
-                            <input type="text" name="auth" disabled placeholder="인증번호 입력"/>
-                            <button type="button" class="btnConfirm">확인</button>
+                            <input type="text" name="auth" placeholder="인증번호 입력"/>
+                            <button type="button" class="btnConfirm" id="btnEmailConfirm">확인</button>
                         </div>
                     </td>
                 </tr>                        
