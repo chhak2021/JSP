@@ -144,6 +144,34 @@ public class UserDAO extends DBHelper {
 		}
 		return vo;
 	}
+	
+	public UserVO selectUserForFindId(String name, String email) {
+		
+		UserVO vo = null;
+		
+		try {
+			logger.info("selectUserForFindId...");
+			
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_USER_FOR_FIND_ID);
+			psmt.setString(1, name);
+			psmt.setString(2, email);
+			
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				vo = new UserVO();
+				vo.setUid(rs.getString(1));
+				vo.setName(rs.getString(3));
+				vo.setEmail(rs.getString(5));
+				vo.setRdate(rs.getString(12));
+			}
+			close();
+			
+		}catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return vo;
+	}
 	public void selectUsers() {}
 	public void updateUser() {}
 	public void deleteUser() {}
