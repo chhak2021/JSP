@@ -30,6 +30,8 @@ public class LoginController extends HttpServlet {
 		String success = req.getParameter("success");
 		req.setAttribute("success", success);
 		
+		HttpSession sess = req.getSession();
+		
 		// 자동 로그인 여부에 따라 로그인 처리
 		Cookie[] cookies = req.getCookies();
 		
@@ -39,15 +41,32 @@ public class LoginController extends HttpServlet {
 				
 				if(cookie.getName().equals("SESSID")) {
 					
-					service.selectUserBySessId();
+					String sessId = cookie.getValue();					
+					UserVO vo = service.selectUserBySessId(sessId);
 					
+					if(vo != null) {
+						// 로그인 처리
+						sess.setAttribute("sessUser", vo);
+						
+						// 쿠기 만료일 연장
+						cookie.setMaxAge(60*60*24*3);
+						resp.addCookie(cookie);			
+						
+						// 데이터베이스 sessId 만료일 연장
+						service.updateUserForSessLimitDate(sessId);
+					}
 				}
 			}
 		}
 		
+		UserVO sessUser = (UserVO)sess.getAttribute("sessUser");
 		
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/user/login.jsp");
-		dispatcher.forward(req, resp);
+		if(sessUser != null) {
+			resp.sendRedirect("/Jboard2/list.do");
+		}else {
+			RequestDispatcher dispatcher = req.getRequestDispatcher("/user/login.jsp");
+			dispatcher.forward(req, resp);	
+		}
 	}
 	
 	@Override
