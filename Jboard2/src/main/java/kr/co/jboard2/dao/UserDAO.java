@@ -197,6 +197,18 @@ public class UserDAO extends DBHelper {
 		}
 		return vo;
 	}
+	public void selectUserBySessId() {
+		try {
+			logger.info("selectUserBySessId...");
+			
+			conn = getConnection();
+			conn.prepareStatement(Sql.SELECT_USER_BY_SESSID);
+			
+		}catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
+	
 	public void selectUsers() {}
 	public void updateUser() {}
 	public int updateUserPassword(String uid, String pass) {
@@ -218,6 +230,20 @@ public class UserDAO extends DBHelper {
 		}
 		
 		return result;
+	}
+	
+	public void updateUserForSession(String uid, String sessId) {
+		try {
+			logger.info("updateUserForSession...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.UPDATE_USER_FOR_SESSION);
+			psmt.setString(1, sessId);
+			psmt.setString(2, uid);
+			psmt.executeUpdate();
+			close();
+		}catch (Exception e) {
+			logger.error(e.getMessage());
+		}
 	}
 	
 	public void deleteUser() {}

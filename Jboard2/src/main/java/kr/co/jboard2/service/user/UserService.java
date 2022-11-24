@@ -49,12 +49,20 @@ public enum UserService {
 	public UserVO selectUserForFindPw(String uid, String email) {
 		return dao.selectUserForFindPw(uid, email);
 	}
+	public void selectUserBySessId() {
+		dao.selectUserBySessId();
+	}
 	
 	public void selectUsers() {}
 	public void updateUser() {}
 	public int updateUserPassword(String uid, String pass) {
 		return dao.updateUserPassword(uid, pass);
 	}
+	
+	public void updateUserForSession(String uid, String sessId) {
+		dao.updateUserForSession(uid, sessId);
+	}
+	
 	public void deleteUser() {}
 	
 
