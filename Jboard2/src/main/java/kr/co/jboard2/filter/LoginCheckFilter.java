@@ -30,32 +30,27 @@ public class LoginCheckFilter implements Filter {
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		
+		// 필터를 동작할 요청주소 리스트 구성
 		uriList = new ArrayList<>();
-		uriList.add("/list.do");
-		uriList.add("/write.do");
-		uriList.add("/modify.do");
-		uriList.add("/view.do");
+		uriList.add("/Jboard2/list.do");
+		uriList.add("/Jboard2/write.do");
+		uriList.add("/Jboard2/modify.do");
+		uriList.add("/Jboard2/view.do");
 	}
-	
 	
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		
 		logger.info("LoginCheckFilter doFilter...");
 		
 		HttpServletRequest req = (HttpServletRequest) request;
 		
 		String uri = req.getRequestURI();
-		logger.debug("uri : " + uri);
 		
 		if(uriList.contains(uri)) {
-			
-			logger.debug("here1...");
 			HttpSession sess = req.getSession();
 			UserVO sessUser = (UserVO)sess.getAttribute("sessUser");
 			
 			if(sessUser == null) {
-				logger.debug("here2...");
 				((HttpServletResponse) response).sendRedirect("/Jboard2/user/login.do");
 				return;
 			}
