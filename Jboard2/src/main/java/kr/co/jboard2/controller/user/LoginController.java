@@ -30,6 +30,7 @@ public class LoginController extends HttpServlet {
 		String success = req.getParameter("success");
 		req.setAttribute("success", success);
 		
+		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/user/login.jsp");
 		dispatcher.forward(req, resp);
 	}
