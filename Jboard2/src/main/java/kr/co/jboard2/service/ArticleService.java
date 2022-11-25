@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -30,8 +31,17 @@ public enum ArticleService {
 	public void insertFile(int parent, String newName, String fname) {
 		dao.insertFile(parent, newName, fname);
 	}
+	
+	public int selectCountTotal() {
+		return dao.selectCountTotal();
+	}
+	
 	public void selectArticle() {}
-	public void selectArticles() {}
+	
+	public List<ArticleVO> selectArticles(int limitStart) {
+		return dao.selectArticles(limitStart);
+	}
+	
 	public void updateArticle() {}
 	public void deleteArticle() {}
 	
@@ -56,6 +66,51 @@ public enum ArticleService {
 		f1.renameTo(f2);
 		
 		return newName;
+	}
+public int getLastPageNum(int total) {
+		
+		int lastPageNum = 0;
+		
+		if(total % 10 == 0){
+			lastPageNum = total / 10;
+		}else{
+			lastPageNum = total / 10 + 1;
+		}
+		
+		return lastPageNum;
+	}
+	
+	public int[] getPageGroupNum(int currentPage, int lastPageNum) {
+		int currentPageGroup = (int)Math.ceil(currentPage / 10.0);
+		int pageGroupStart = (currentPageGroup - 1) * 10 + 1;
+		int pageGroupEnd = currentPageGroup * 10;
+		
+		if(pageGroupEnd > lastPageNum){
+			pageGroupEnd = lastPageNum;
+		}
+		
+		int[] result = {pageGroupStart, pageGroupEnd};
+		
+		return result;
+	}
+	
+	public int getPageStartNum(int total, int currentPage) {
+		int start = (currentPage - 1) * 10;
+		return total - start;
+	}
+	
+	public int getCurrentPage(String pg) {
+		int currentPage = 1;
+		
+		if(pg != null){
+			currentPage = Integer.parseInt(pg);	
+		}
+		
+		return currentPage;
+	}
+	
+	public int getStartNum(int currentPage) {
+		return (currentPage - 1) * 10;
 	}
 	
 	
