@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.JsonObject;
 
-import kr.co.jboard2.service.user.UserService;
+import kr.co.jboard2.service.UserService;
 
 @WebServlet("/user/emailAuth.do")
 public class EmailAuthController extends HttpServlet {

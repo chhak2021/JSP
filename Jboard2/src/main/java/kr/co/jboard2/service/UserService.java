@@ -1,4 +1,4 @@
-package kr.co.jboard2.service.user;
+package kr.co.jboard2.service;
 
 import java.util.Properties;
 import java.util.concurrent.ThreadLocalRandom;

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.JsonObject;
 
-import kr.co.jboard2.service.user.UserService;
+import kr.co.jboard2.service.UserService;
 import kr.co.jboard2.vo.UserVO;
 
 @WebServlet("/user/findPw.do")
