@@ -3,7 +3,7 @@
 <jsp:include page="./_header.jsp"/>
 <main id="board">
     <section class="list">                
-        <form action="#">
+        <form action="/Jboard2/list.do">
             <input type="text" name="search" placeholder="제목 키워드, 글쓴이 검색">
             <input type="submit" value="검색">
         </form>
@@ -30,13 +30,13 @@
 
         <div class="page">
         	<c:if test="${pageGroupStart > 1}">
-            	<a href="/Jboard2/list.do?pg=${pageGroupStart - 1}" class="prev">이전</a>
+            	<a href="/Jboard2/list.do?pg=${pageGroupStart - 1}&search=${search}" class="prev">이전</a>
             </c:if>
             <c:forEach var="i" begin="${pageGroupStart}" end="${pageGroupEnd}">
-            	<a href="/Jboard2/list.do?pg=${i}" class="num ${currentPage == i?'current':'off'}">${i}</a>
+            	<a href="/Jboard2/list.do?pg=${i}&search=${search}" class="num ${currentPage == i?'current':'off'}">${i}</a>
             </c:forEach>
             <c:if test="${pageGroupEnd < lastPageNum}">
-            	<a href="/Jboard2/list.do?pg=${pageGroupEnd + 1}" class="next">다음</a>
+            	<a href="/Jboard2/list.do?pg=${pageGroupEnd + 1}&search=${search}" class="next">다음</a>
             </c:if>
         </div>
         <a href="./write.do" class="btn btnWrite">글쓰기</a>
