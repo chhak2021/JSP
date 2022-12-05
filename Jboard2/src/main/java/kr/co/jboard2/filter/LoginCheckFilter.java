@@ -46,21 +46,30 @@ public class LoginCheckFilter implements Filter {
 		HttpSession sess = req.getSession();
 		UserVO sessUser = (UserVO)sess.getAttribute("sessUser");
 		
+		logger.debug("here1");
+		
 		if(uriList.contains(uri)) {
 			// 로그인을 하지 않았을 경우
+			logger.debug("here2");
+			
 			if(sessUser == null) {
+				logger.debug("here3");
 				((HttpServletResponse) response).sendRedirect("/Jboard2/user/login.do");
 				return;
 			}
 			
 		}else if(uri.contains("/user/login.do")) {
 			// 로그인을 했을 경우
+			logger.debug("here4");
+			
 			if(sessUser != null) {
+				logger.debug("here5");
 				((HttpServletResponse) response).sendRedirect("/Jboard2/list.do");
 				return;
 			}
 		}
 		
+		logger.debug("here6");
 		chain.doFilter(request, response);
 	}
 }

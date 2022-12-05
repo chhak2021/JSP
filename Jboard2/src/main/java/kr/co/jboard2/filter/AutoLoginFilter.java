@@ -35,11 +35,17 @@ public class AutoLoginFilter implements Filter {
 		
 		UserVO sessUser = (UserVO) sess.getAttribute("sessUser");
 		
+		logger.debug("here1");
+		
 		if(sessUser != null) {
+			
+			logger.debug("here2");
 			// 로그인 상태일 경우
 			// 다음 필터 실행
 			chain.doFilter(request, response);
 		}else {
+			
+			logger.debug("here3");
 			// 로그인 상태가 아닐 경우
 			// 자동 로그인 여부에 따라 로그인 처리
 			Cookie[] cookies = req.getCookies();
@@ -68,6 +74,8 @@ public class AutoLoginFilter implements Filter {
 					}
 				}
 			}
+			
+			logger.debug("here4");
 			// 다음 필터 실행
 			chain.doFilter(request, response);
 		}
